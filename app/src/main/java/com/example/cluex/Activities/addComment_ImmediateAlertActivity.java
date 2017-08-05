@@ -87,6 +87,7 @@ public class addComment_ImmediateAlertActivity extends AppCompatActivity {
             intent.putExtra("COMMENT",str_comment);
             setResult(2,intent);
             finish();//finishing activity
+            
 
 
         }
