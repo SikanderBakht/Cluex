@@ -74,7 +74,8 @@
                 android:resource="@xml/provider_paths" />
         </provider>
 
-        <activity android:name=".Activities.CameraActivity"></activity>
+        <activity android:name=".Activities.CameraActivity" />
+        <activity android:name=".Activities.imageSliderActivity"></activity>
     </application>
 
 </manifest>
