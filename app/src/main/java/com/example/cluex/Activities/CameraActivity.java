@@ -50,6 +50,10 @@ public class CameraActivity extends AppCompatActivity {
 
 
 
+
+
+
+
     private void initializeObjects()
     {
         addPhotoBtnJava=(Button) findViewById(R.id.add_photo_btn_xml);
@@ -84,7 +88,7 @@ public class CameraActivity extends AppCompatActivity {
     {
 
         Uri photoURI = null;
-        Intent cameraIntent=new Intent();
+        Intent  cameraIntent=new Intent();
         cameraIntent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
 
         try
@@ -261,7 +265,10 @@ public class CameraActivity extends AppCompatActivity {
         {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                Toast.makeText(getApplicationContext(), "ImageView long pressed!", Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(CameraActivity.this, imageSliderActivity.class);
+                startActivity(intent);
+                Toast.makeText(getApplicationContext(), "ImageView pressed!", Toast.LENGTH_SHORT).show();
             }
         });
     }
