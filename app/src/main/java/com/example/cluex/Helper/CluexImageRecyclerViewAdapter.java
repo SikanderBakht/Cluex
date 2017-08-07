@@ -3,6 +3,7 @@ package com.example.cluex.Helper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +43,8 @@ public class CluexImageRecyclerViewAdapter extends RecyclerView.Adapter<CluexIma
         int scaleFactor = Math.min(cameraImageWidth/targetImageViewWidth, cameraImageHeight/targetImageViewHeight);
         bmOptions.inSampleSize = scaleFactor;
         bmOptions.inJustDecodeBounds = false;
+
+        //Log.i("Image path", imagesFile.listFiles()[position].getAbsolutePath() );
 
         //Bitmap photoReducedSizeBitmp = BitmapFactory.decodeFile(mImageFileLocation, bmOptions);
         //tempImageViewJava.setImageBitmap(photoReducedSizeBitmp);
