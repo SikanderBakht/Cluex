@@ -227,6 +227,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                     //Getting clicked value.
                     RecyclerViewItemPosition = Recyclerview.getChildAdapterPosition(ChildView);
+                    LatLng myloc = new LatLng(coordinatesArrayObj.get(RecyclerViewItemPosition).getPostedAlertLat(),coordinatesArrayObj.get(RecyclerViewItemPosition).getPostedAlertLng());
+
+
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myloc, 30));
 
                     // Showing clicked item value on screen using toast message.
                     //         Toast.makeText(MainActivity.this, Number.get(RecyclerViewItemPosition), Toast.LENGTH_LONG).show();
