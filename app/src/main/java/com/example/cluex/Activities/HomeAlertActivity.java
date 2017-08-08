@@ -82,8 +82,8 @@ public class HomeAlertActivity extends AppCompatActivity {
 
         Toolbar topToolBar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(topToolBar);
-        topToolBar.setLogo(R.drawable.logo);
-        topToolBar.setLogoDescription(getResources().getString(R.string.logo_desc));
+        /*topToolBar.setLogo(R.drawable.logo);
+        topToolBar.setLogoDescription(getResources().getString(R.string.logo_desc));*/
 
         List<AlertIconsDetails> rowListItem = getAllItemList();
         lLayout = new GridLayoutManager(HomeAlertActivity.this, 2);
@@ -127,12 +127,6 @@ public class HomeAlertActivity extends AppCompatActivity {
         }
         if (id == R.id.action_refresh) {
             Toast.makeText(HomeAlertActivity.this, "Refresh App", Toast.LENGTH_LONG).show();
-        }
-        if (id == R.id.action_new) {
-            Intent intent = new Intent(this, SignUPActivity.class);
-            startActivity(intent);
-
-            Toast.makeText(HomeAlertActivity.this, "Create Text", Toast.LENGTH_LONG).show();
         }
 
         return super.onOptionsItemSelected(item);
