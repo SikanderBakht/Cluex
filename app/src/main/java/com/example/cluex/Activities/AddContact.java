@@ -79,7 +79,13 @@ public class AddContact extends AppCompatActivity implements View.OnClickListene
 
     }
 
+    @Override
+    public void onBackPressed() {
 
+        finish();
+        Intent intent = new Intent(AddContact.this, ICEContactsActivity.class);
+        startActivity(intent);
+    }
 
     public void onClick(View v) {
 

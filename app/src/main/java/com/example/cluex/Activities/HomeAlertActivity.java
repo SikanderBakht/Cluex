@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.example.cluex.Helper.AlertAdapter;
 import com.example.cluex.Helper.AlertIconsDetails;
 import com.example.cluex.Helper.AppController;
+import com.example.cluex.Helper.BottomNavigationViewHelper;
 import com.example.cluex.R;
 import com.example.cluex.Helper.SessionManager;
 
@@ -28,10 +29,14 @@ public class HomeAlertActivity extends AppCompatActivity {
     private SessionManager session;
     String username;
     String RegisteredUser_ID;
+    private BottomNavigationViewHelper bb =new BottomNavigationViewHelper();
 
     private AppController app;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+
+
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -49,18 +54,30 @@ public class HomeAlertActivity extends AppCompatActivity {
                         case R.id.navigation_notifications:
                             Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
                             startActivity(intent);
+                        case R.id.navigation_newsfeed:
+                            Intent CheckIntent = new Intent(getApplicationContext(), MapsActivity.class);
+                            startActivity(CheckIntent);
 
                 //          mTextMessage.setText(R.string.title_notifications);
+
+
                     return true;
             }
             return false;
         }
 
+
+
+
     };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+
 
         session = new SessionManager(getApplicationContext());
         session.checkLogin();
@@ -95,8 +112,25 @@ public class HomeAlertActivity extends AppCompatActivity {
         AlertAdapter rcAdapter = new AlertAdapter(HomeAlertActivity.this, rowListItem);
         rView.setAdapter(rcAdapter);
 
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
+
+        bb.disableShiftMode(bottomNavigationView);
+
+
+
 
     }
+
+
+    @Override
+    public void onBackPressed() {
+
+        // finish();
+        Intent intent = new Intent(HomeAlertActivity.this, HomeAlertActivity.class);
+        startActivity(intent);
+    }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

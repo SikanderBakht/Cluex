@@ -8,6 +8,7 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.example.cluex.Helper.AppConfig;
 import com.example.cluex.Helper.AppController;
+import com.example.cluex.Helper.MapMarkerBounce;
 import com.example.cluex.Helper.PostedAlertDetail;
 import com.example.cluex.Helper.RecyclerViewAdapter;
 import com.example.cluex.R;
@@ -34,6 +36,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -57,6 +60,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     String volleyResponse;
     private List<PostedAlertDetail> coordinatesArrayObj;
     private HashMap<Marker,Integer> hashMap=new HashMap<Marker, Integer>();
+    private HashMap<Integer,Marker> hashMap1=new HashMap<Integer, Marker>();
     private PostedAlertDetail postedAlertDetailObj;
 
     RecyclerView recyclerView;
@@ -68,6 +72,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     View ChildView ;
     int RecyclerViewItemPosition ;
     Button btn;
+    MapMarkerBounce mmb = new MapMarkerBounce();
+ //   private final Handler mHandler;
+   // private Runnable mAnimation;
+
 
 
 
@@ -78,6 +86,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         coordinatesArrayObj=new ArrayList<PostedAlertDetail>();
+
 
 
 
@@ -185,7 +194,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 //        mMap.setOnMarkerClickListener();
 
-        btn=(Button) findViewById(R.id.button);
+    //    btn=(Button) findViewById(R.id.button);
 
         recyclerView = (RecyclerView)findViewById(R.id.recyclerview1);
 
@@ -230,7 +239,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     LatLng myloc = new LatLng(coordinatesArrayObj.get(RecyclerViewItemPosition).getPostedAlertLat(),coordinatesArrayObj.get(RecyclerViewItemPosition).getPostedAlertLng());
 
 
-                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myloc, 30));
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myloc, 20));
+
+                    mmb.onMarkerClick(hashMap1.get(RecyclerViewItemPosition) );
+
+
+
+                    //     mMap.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
 
                     // Showing clicked item value on screen using toast message.
                     //         Toast.makeText(MainActivity.this, Number.get(RecyclerViewItemPosition), Toast.LENGTH_LONG).show();
@@ -251,26 +266,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
-
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-                //    RecyclerViewHorizontalAdapter = new RecyclerViewAdapter(CheckNumber);
-
-                //     RecyclerViewHorizontalAdapter.();
-
-                //  HorizontalLayout = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false);
-                //  recyclerView.setLayoutManager(HorizontalLayout);
-
-                //       recyclerView.setAdapter(RecyclerViewHorizontalAdapter);
-
-                HorizontalLayout.scrollToPositionWithOffset(9, 0);
-
-            }
-
-        });
 
 
 
@@ -445,11 +440,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
                 LatLng mylocation = new LatLng(coordinatesArrayObj.get(i).getPostedAlertLat(), coordinatesArrayObj.get(i).getPostedAlertLng());
-                //     LatLng mylocation = new LatLng(coordinatesArrayObj1.get(i).getPostedAlertLat(), coordinatesArrayObj1.get(i).getPostedAlertLng());
-
+                //     LatLng mylocation = new LatLng(coordinatesArrayObj1.get(i).getPostedAlertLat(), coordinatesArrayObj1.get(i).getPostedAlertLng())
               Marker marker=  mMap.addMarker(new MarkerOptions().position(mylocation).title(coordinatesArrayObj.get(i).getPostedAlertTitle()).snippet(coordinatesArrayObj.get(i).getPostedAlertDate()).snippet(""+i));
 
                 hashMap.put(marker,i);
+                hashMap1.put(i,marker);
+
 
                 //   mMap.moveCamera(CameraUpdateFactory.newLatLng(mylocation));
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(mylocation, 12));
@@ -458,22 +454,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
 
 
-            mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-                @Override
-                public boolean onMarkerClick(Marker marker) {
+
+
+        //    mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+          //      @Override
+            //    public boolean onMarkerClick(Marker marker) {
                   //  Intent intent = new Intent(MapsActivity.this, HomeAlertActivity.class);
                    // startActivity(intent);
-                    int position= hashMap.get(marker);
-                    HorizontalLayout.scrollToPositionWithOffset(position, 0);
+              //      int position= hashMap.get(marker);
+               //     HorizontalLayout.scrollToPositionWithOffset(position, 0);
 
 
 
 
 
 
-                    return false;
-                }
-            });
+//                    return false;
+  //              }
+    //        });
 
 
 
@@ -556,6 +554,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         super.onBackPressed();
 
         int size=coordinatesArrayObj.size();
+
+
+        Intent intent = new Intent(MapsActivity.this,HomeAlertActivity.class);
+        startActivity(intent);
+        finish();
+
 
     }
 

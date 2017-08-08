@@ -2,11 +2,14 @@ package com.example.cluex.Activities;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.SmsManager;
@@ -117,61 +120,178 @@ public class SendICEContactAlert extends AppCompatActivity {
 
              //       address = locationDetialsMapObject.get("url");
 
-
-
-
-
-                    if(checkTypeAlert.matches("Roberry"))
+                    if(txtMessage.length()==0)
                     {
-                        alertMessage= "Robbery has taken place";
+
+                        AlertDialog.Builder builder;
+
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            builder = new AlertDialog.Builder(SendICEContactAlert.this, android.R.style.Theme_DeviceDefault_Light_Dialog_Alert);
+                        } else {
+                            builder = new AlertDialog.Builder(SendICEContactAlert.this);
+                        }
+
+
+                        builder.setCancelable(false)
+
+                                .setPositiveButton("Send SMS", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog,int which) {
+
+
+                                        if(checkTypeAlert.matches("Roberry"))
+                                {
+                                    alertMessage= "Robbery has taken place";
+
+                                }
+
+                                if(checkTypeAlert.matches("Accident"))
+                                {
+                                    alertMessage= "An Accident has taken place";
+
+                                }
+
+                                if(checkTypeAlert.matches("Medical"))
+                                {
+                                    alertMessage= "I am in medical emergency";
+
+                                }
+
+                                if(checkTypeAlert.matches("Fire"))
+                                {
+                                    alertMessage= "Fire has been erupted";
+
+                                }
+
+                                if(checkTypeAlert.matches("Natural Disaster"))
+                                {
+                                    alertMessage= "A Natural disaster has taken place";
+
+                                }
+
+                                if(checkTypeAlert.matches("Harassment"))
+                                {
+                                    alertMessage= "Some one is harassing me";
+
+                                }
+
+                                if(checkTypeAlert.matches("Kidnapping"))
+                                {
+                                    alertMessage= "I am being kidnapped";
+
+                                }
+
+                                if(checkTypeAlert.matches("Terrorist Attack"))
+                                {
+                                    alertMessage= "A terrorist attack has taken place";
+
+                                }
+
+
+
+                                sendSMSMessage(latitude,longitude);
+
+
+                             //   Toast.makeText(context,"You clicked Send Message",Toast.LENGTH_LONG).show();
+                            }
+                        })
+
+                                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                    }
+
+
+                                    //    Toast.makeText(context,"You clicked Cancel",Toast.LENGTH_LONG).show();
+
+
+                        })
+
+                                .setIcon(R.drawable.ic_launcher)
+
+                                .setTitle("Alert")
+
+                                .setMessage("Do you want to send message without text?");
+
+
+                        final AlertDialog diag = builder.create();
+
+                        diag.setOnShowListener( new DialogInterface.OnShowListener() {
+                            @Override
+                            public void onShow(DialogInterface arg0) {
+                                diag.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.textColor));
+                                diag.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.textColor));
+                                diag.getButton(AlertDialog.BUTTON_NEUTRAL).setTextColor(getResources().getColor(R.color.textColor));
+                            }
+                        });
+
+                        diag.show();
+
 
                     }
 
-                    if(checkTypeAlert.matches("Accident"))
+
+                    else if (txtMessage.length()>0)
                     {
-                        alertMessage= "An Accident has taken place";
+
+
+                        if(checkTypeAlert.matches("Roberry"))
+                        {
+                            alertMessage= "Robbery has taken place";
+
+                        }
+
+                        if(checkTypeAlert.matches("Accident"))
+                        {
+                            alertMessage= "An Accident has taken place";
+
+                        }
+
+                        if(checkTypeAlert.matches("Medical"))
+                        {
+                            alertMessage= "I am in medical emergency";
+
+                        }
+
+                        if(checkTypeAlert.matches("Fire"))
+                        {
+                            alertMessage= "Fire has been erupted";
+
+                        }
+
+                        if(checkTypeAlert.matches("Natural Disaster"))
+                        {
+                            alertMessage= "A Natural disaster has taken place";
+
+                        }
+
+                        if(checkTypeAlert.matches("Harassment"))
+                        {
+                            alertMessage= "Some one is harassing me";
+
+                        }
+
+                        if(checkTypeAlert.matches("Kidnapping"))
+                        {
+                            alertMessage= "I am being kidnapped";
+
+                        }
+
+                        if(checkTypeAlert.matches("Terrorist Attack"))
+                        {
+                            alertMessage= "A terrorist attack has taken place";
+
+                        }
+
+
+
+                        sendSMSMessage(latitude,longitude);
+
 
                     }
 
-                    if(checkTypeAlert.matches("Medical"))
-                    {
-                        alertMessage= "I am in medical emergency";
-
-                    }
-
-                    if(checkTypeAlert.matches("Fire"))
-                    {
-                        alertMessage= "Fire has been erupted";
-
-                    }
-
-                    if(checkTypeAlert.matches("Natural Disaster"))
-                    {
-                        alertMessage= "A Natural disaster has taken place";
-
-                    }
-
-                    if(checkTypeAlert.matches("Harassment"))
-                    {
-                        alertMessage= "Some one is harassing me";
-
-                    }
-
-                    if(checkTypeAlert.matches("Kidnapping"))
-                    {
-                        alertMessage= "I am being kidnapped";
-
-                    }
-
-                    if(checkTypeAlert.matches("Terrorist Attack"))
-                    {
-                        alertMessage= "A terrorist attack has taken place";
-
-                    }
 
 
-
-                    sendSMSMessage(latitude,longitude);
 
                 }
 
@@ -203,6 +323,17 @@ public class SendICEContactAlert extends AppCompatActivity {
 
         }
 
+
+    @Override
+    public void onBackPressed() {
+
+       // finish();
+        Intent intent = new Intent(SendICEContactAlert.this, HomeAlertActivity.class);
+        startActivity(intent);
+    }
+
+
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
@@ -223,7 +354,7 @@ public class SendICEContactAlert extends AppCompatActivity {
 
 
     protected void sendSMSMessage(double latitude, double longitude ) {
-        phoneNo = arr.get(index).toString();
+      //  phoneNo = arr.get(index).toString();
 
         MessageBox= (EditText) findViewById(R.id.editText2);
         MessageInTheBox= MessageBox.getText().toString();
@@ -281,8 +412,8 @@ public class SendICEContactAlert extends AppCompatActivity {
                         smsManager.sendTextMessage(arr.get(i).toString(), null,message, null, null);
 
                     }
-                    Toast.makeText(getApplicationContext(), message,
-                            Toast.LENGTH_LONG).show();
+             //       Toast.makeText(getApplicationContext(), message,
+               //             Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(getApplicationContext(),
                             "SMS faild, please try again.", Toast.LENGTH_LONG).show();

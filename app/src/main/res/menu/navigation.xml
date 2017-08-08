@@ -4,16 +4,35 @@
     <item
         android:id="@+id/navigation_home"
         android:icon="@drawable/ic_home_black_24dp"
-        android:title="@string/title_home" />
+        android:title="@string/title_home"
+        android:layout_width="wrap_content"
+        android:layout_weight="1"
+        />
+
+    <item
+        android:id="@+id/navigation_newsfeed"
+        android:icon="@drawable/ic_view_headline_black_24dp"
+        android:title="Newsfeed"
+        android:layout_width="wrap_content"
+        android:layout_weight="1"
+        />
+
+
 
     <item
         android:id="@+id/navigation_dashboard"
-        android:icon="@drawable/ic_dashboard_black_24dp"
-        android:title="@string/title_dashboard" />
+        android:icon="@drawable/ic_contact_phone_black_24dp"
+        android:title="AddContact"
+        android:layout_width="wrap_content"
+        android:layout_weight="1"
+        />
 
     <item
         android:id="@+id/navigation_notifications"
-        android:icon="@drawable/ic_notifications_black_24dp"
-        android:title="@string/title_notifications" />
+        android:icon="@drawable/ic_map_black_24dp"
+        android:title="Maps"
+        android:layout_width="wrap_content"
+        android:layout_weight="1"
+        />
 
 </menu>
