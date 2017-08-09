@@ -1,9 +1,13 @@
 package com.example.cluex.Activities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,13 +16,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.cluex.BuildConfig;
 import com.example.cluex.Helper.AlertAdapter;
 import com.example.cluex.Helper.AlertIconsDetails;
 import com.example.cluex.Helper.AppController;
+import com.example.cluex.Helper.BottomNavigationViewHelper;
 import com.example.cluex.R;
 import com.example.cluex.Helper.SessionManager;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class HomeAlertActivity extends AppCompatActivity {
@@ -28,10 +38,67 @@ public class HomeAlertActivity extends AppCompatActivity {
     private SessionManager session;
     String username;
     String RegisteredUser_ID;
+    private BottomNavigationViewHelper bb =new BottomNavigationViewHelper();
+
+
+    private File cluexGalleryFolder;
+    private File imageFile;
+    private String CLUEX_GALLERY_LOCATION="cluex_image_gallery";
+    private static final int START_CAMERA_REQUEST_CODE_TWO=2;
+
+    //------------------ for Camera - if not work we will delete this code-----------------------//
+
+    private void createClueXImageGallery()
+    {
+        File storageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "Camera");
+        cluexGalleryFolder=new File(storageDir, CLUEX_GALLERY_LOCATION);
+        if(!cluexGalleryFolder.exists())
+        {
+            cluexGalleryFolder.mkdirs();
+        }
+    }
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_ClueX_" + timeStamp + "_";
+        //File storageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "Camera");
+        imageFile = File.createTempFile(imageFileName,  /* prefix */".jpg",         /* suffix */cluexGalleryFolder      /* directory */);
+
+        // Save a file: path for use with ACTION_VIEW intents
+        //mImageFileLocation = image.getAbsolutePath();// unCommented By Sikander for temporary use
+        return imageFile;
+    }
+
+    private void takePhoto()
+    {
+
+        Uri photoURI = null;
+        Intent  cameraIntent=new Intent();
+        cameraIntent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        try
+        {
+            photoURI = FileProvider.getUriForFile(HomeAlertActivity.this, BuildConfig.APPLICATION_ID + ".provider", createImageFile());
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+        startActivityForResult(cameraIntent,START_CAMERA_REQUEST_CODE_TWO);
+    }
+
+
+
+    //---------------------------------------------------------end------------------------------------------------------//
+
 
     private AppController app;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+
+
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -49,18 +116,30 @@ public class HomeAlertActivity extends AppCompatActivity {
                         case R.id.navigation_notifications:
                             Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
                             startActivity(intent);
+                        case R.id.navigation_newsfeed:
+                            Intent CheckIntent = new Intent(getApplicationContext(), MapsActivity.class);
+                            startActivity(CheckIntent);
 
                 //          mTextMessage.setText(R.string.title_notifications);
+
+
                     return true;
             }
             return false;
         }
 
+
+
+
     };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+
 
         session = new SessionManager(getApplicationContext());
         session.checkLogin();
@@ -82,8 +161,7 @@ public class HomeAlertActivity extends AppCompatActivity {
 
         Toolbar topToolBar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(topToolBar);
-        topToolBar.setLogo(R.drawable.logo);
-        topToolBar.setLogoDescription(getResources().getString(R.string.logo_desc));
+
 
         List<AlertIconsDetails> rowListItem = getAllItemList();
         lLayout = new GridLayoutManager(HomeAlertActivity.this, 2);
@@ -95,8 +173,25 @@ public class HomeAlertActivity extends AppCompatActivity {
         AlertAdapter rcAdapter = new AlertAdapter(HomeAlertActivity.this, rowListItem);
         rView.setAdapter(rcAdapter);
 
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
+
+        bb.disableShiftMode(bottomNavigationView);
+
+
+
 
     }
+
+
+    @Override
+    public void onBackPressed() {
+
+        // finish();
+        Intent intent = new Intent(HomeAlertActivity.this, HomeAlertActivity.class);
+        startActivity(intent);
+    }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -113,20 +208,21 @@ public class HomeAlertActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.home_page_alert_toolbar_camera_icon) {
 
-             SessionManager session;
+            createClueXImageGallery();
+            takePhoto();
 
-            // Session manager
-               session = new SessionManager(getApplicationContext());
-
-               session.logoutUser();
 
 
 
         }
-        if (id == R.id.action_refresh) {
-            Toast.makeText(HomeAlertActivity.this, "Refresh App", Toast.LENGTH_LONG).show();
+        if (id == R.id.home_page_alert_toolbar_logout_icon) {
+            SessionManager session;
+            // Session manager
+            session = new SessionManager(getApplicationContext());
+            session.logoutUser();
+
         }
 
 

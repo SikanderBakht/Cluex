@@ -183,8 +183,8 @@ public class ICEContactsCustomAdapter extends ArrayAdapter <SetContactData> impl
 
 
 
-        Toast.makeText(mContext.getApplicationContext(), "ButtonCLicked",
-                Toast.LENGTH_SHORT).show();
+   //     Toast.makeText(mContext.getApplicationContext(), "ButtonCLicked",
+     //           Toast.LENGTH_SHORT).show();
     }
 
 

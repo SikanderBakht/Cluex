@@ -30,6 +30,7 @@ import com.example.cluex.Helper.SetContactData;
 import com.example.cluex.R;
 
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 import static android.R.attr.value;
 
@@ -60,8 +61,21 @@ public class MobileContactsActivity extends ListActivity {
         //	button3 = (Button) findViewById(R.id.button3);
         inputSearch = (EditText) findViewById(R.id.inputSearch);
 
-        button2=(Button) findViewById(R.id.button2);
+        button2=(Button) findViewById(R.id.button3);
         lv = (ListView) findViewById(android.R.id.list);
+
+
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent AddContactIntent = new Intent(getApplicationContext(), HomeAlertActivity.class);
+                startActivity(AddContactIntent);
+
+
+            }
+        });
+
 
 
         //
@@ -113,7 +127,8 @@ public class MobileContactsActivity extends ListActivity {
                     {
 
                         String s2= inputSearch.getText().toString();
-                        if(conCont.get(i).getName().toString().contains(inputSearch.getText().toString()))
+                        String s1= conCont.get(i).getName().toString();
+                        if(Pattern.compile(Pattern.quote(s2), Pattern.CASE_INSENSITIVE).matcher(s1).find())
                         {
                             array_sort.add(conCont.get(i));
 
@@ -175,6 +190,16 @@ public class MobileContactsActivity extends ListActivity {
         //lv.setAdapter(arrayAdapter);
 
     }
+
+
+    @Override
+    public void onBackPressed() {
+
+        finish();
+        Intent intent = new Intent(MobileContactsActivity.this, ICEContactsActivity.class);
+        startActivity(intent);
+    }
+
 
     public void addContact(View v)
     {
@@ -254,8 +279,8 @@ public class MobileContactsActivity extends ListActivity {
 
 
 
-            Toast.makeText(getApplicationContext(), "ButtonCLicked",
-                    Toast.LENGTH_SHORT).show();
+      //      Toast.makeText(getApplicationContext(), "ButtonCLicked",
+        //            Toast.LENGTH_SHORT).show();
         }
 
         private View setList(final int position, ViewGroup parent) {
