@@ -87,7 +87,7 @@ public class DetailAlertMapActivity  extends FragmentActivity implements OnMapRe
 
         TextView editText_alert, editText_location;
         ImageView alertImage;
-        String alert_type, commentOnAlert = "hello world!!!";
+        String alert_type, commentOnAlert = " ";
         ImageButton cancel_button, submit_button, addPhoto_button, addComment_button;
 
         boolean gps_enabled = false;
@@ -174,18 +174,20 @@ public class DetailAlertMapActivity  extends FragmentActivity implements OnMapRe
 
             editText_alert.setText(title);
 
-
+/*
             cancel_button.setOnClickListener(new View.OnClickListener() {
 
                 public void onClick(View view) {
 
-                    Intent intent = new Intent(getApplicationContext(), HomeAlertActivity.class);
+                 //   Intent intent = new Intent(getApplicationContext(), HomeAlertActivity.class);
 
-                    startActivity(intent);
+                //    startActivity(intent);
+                    finish();
 
 
                 }
             });
+            */
 
 
             //////////////////////////////////////////
@@ -206,10 +208,11 @@ public class DetailAlertMapActivity  extends FragmentActivity implements OnMapRe
 
 
   // onclick of cancel button
-        public void onClickCancel(View view) {
+        public void onClickCancelAlert(View view) {
 
             Intent intent = new Intent(getApplicationContext(), HomeAlertActivity.class);
             startActivity(intent);
+            finish();
 
 
         }
@@ -324,8 +327,7 @@ public class DetailAlertMapActivity  extends FragmentActivity implements OnMapRe
 
                 description = commentOnAlert;   //parameter
 
-                Toast.makeText(this, commentOnAlert,
-                        Toast.LENGTH_LONG).show();
+            //    Toast.makeText(this, commentOnAlert, Toast.LENGTH_LONG).show();
 
             }
         }

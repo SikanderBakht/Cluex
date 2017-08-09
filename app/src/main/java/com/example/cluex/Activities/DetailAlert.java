@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.example.cluex.Helper.ConnectionStatus;
 import com.example.cluex.Helper.UserLocation;
 import com.example.cluex.R;
 
@@ -44,6 +45,7 @@ public class DetailAlert extends AppCompatActivity {
     private String province="abc";
     private String state="abc";
     private String streetAddress="abc";
+    private ConnectionStatus connectionStatus;
 
 
 
@@ -88,6 +90,8 @@ public class DetailAlert extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_alert);
 
+        connectionStatus=new ConnectionStatus(this);
+
 
         // Get reference of SpinnerView from layout/activity_detial_alert
         incidentSpinner =(Spinner)findViewById(R.id.incident_type_spinner_id);
@@ -103,13 +107,15 @@ public class DetailAlert extends AppCompatActivity {
         }
         //   int res = extras.getInt("resourseInt");
 
-
         alertType=extras.getString("alertType");
-
-
         detailAlertTitle.setText(alertType);
 
-        userLocationObj=new UserLocation(this);
+
+        if(!connectionStatus.is_gps_available())
+        {
+            finish();
+        }
+
 
         /////////////////////////////////  incident spinner start   ////////////////////////////////////////////////////
 
@@ -358,6 +364,7 @@ public class DetailAlert extends AppCompatActivity {
 
 
 
+                      userLocationObj=new UserLocation(getApplicationContext());
 
                         lat=userLocationObj.getLatitude();
                         lng=userLocationObj.getLongitude();

@@ -128,12 +128,7 @@ public class HomeAlertActivity extends AppCompatActivity {
         if (id == R.id.action_refresh) {
             Toast.makeText(HomeAlertActivity.this, "Refresh App", Toast.LENGTH_LONG).show();
         }
-        if (id == R.id.action_new) {
-            Intent intent = new Intent(this, SignUPActivity.class);
-            startActivity(intent);
 
-            Toast.makeText(HomeAlertActivity.this, "Create Text", Toast.LENGTH_LONG).show();
-        }
 
         return super.onOptionsItemSelected(item);
     }

@@ -20,6 +20,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.example.cluex.Helper.AppConfig;
 import com.example.cluex.Helper.AppController;
+import com.example.cluex.Helper.ConnectionStatus;
 import com.example.cluex.Helper.inputValidation;
 import com.example.cluex.R;
 import com.example.cluex.SQL.SQLiteHandler;
@@ -43,6 +44,7 @@ public class LoginActivity extends AppCompatActivity {
     private ProgressDialog pDialog;
     private SessionManager session;
     private inputValidation inputValidationLogin;
+    private ConnectionStatus connectionStatusObj;
 
 
     private void initializeObjects()
@@ -53,6 +55,7 @@ public class LoginActivity extends AppCompatActivity {
         inputPasswordTextInputLayout=(TextInputLayout) findViewById(R.id.pswrd_text_input_layout_xml);
         btnLogin = (Button) findViewById(R.id.btnLogin);
         btnLinkToRegister = (Button) findViewById(R.id.btnLinkToRegisterScreen);
+        connectionStatusObj=new ConnectionStatus(this);
 
         //for validation to focus view
         /*mLoginFormView = findViewById(R.id.login_form);
@@ -93,24 +96,12 @@ public class LoginActivity extends AppCompatActivity {
 
             public void onClick(View view) {
 
-                /*
-                String email = inputEmail.getText().toString().trim();
-                String password = inputPassword.getText().toString().trim();
 
-
-                // Check for empty data in the form
-                if (!email.isEmpty() && !password.isEmpty()) {
-                    // login user
-
-                } else {
-                    // Prompt user to enter credentials
-                    Toast.makeText(getApplicationContext(),
-                            "Please enter the credentials!", Toast.LENGTH_LONG)
-                            .show();
+                if(connectionStatusObj.checkInternetConnection())
+                    attemptLogin();
+                else {
+                    Toast.makeText(getApplicationContext(), "Check your Internet Connection please! ", Toast.LENGTH_LONG).show();
                 }
-                */
-                attemptLogin();
-              //  checkLogin(email, password);
 
 
             }
@@ -178,18 +169,22 @@ public class LoginActivity extends AppCompatActivity {
                         // Launch main activity
                         Intent intent = new Intent(LoginActivity.this,
                                 HomeAlertActivity.class);
+                        Toast.makeText(getApplicationContext(),
+                                "Logged in Successfuly!", Toast.LENGTH_LONG).show();
                         startActivity(intent);
                         finish();
                     } else {
                         // Error in login. Get the error message
                         String errorMsg = jObj.getString("error_msg");
-                        Toast.makeText(getApplicationContext(),
-                                errorMsg, Toast.LENGTH_LONG).show();
+                   //     Toast.makeText(getApplicationContext(), errorMsg, Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Login Failed, Please try Again !!! ", Toast.LENGTH_LONG).show();
                     }
                 } catch (JSONException e) {
                     // JSON error
                     e.printStackTrace();
-                    Toast.makeText(getApplicationContext(), "Json error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+
+                    Toast.makeText(getApplicationContext(), "Login Failed, Please try Again !!! ", Toast.LENGTH_LONG).show();
+                 //   Toast.makeText(getApplicationContext(), "Json error: " + e.getMessage(), Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -198,8 +193,9 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e(TAG, "Login Error: " + error.getMessage());
-                Toast.makeText(getApplicationContext(),
-                        error.getMessage(), Toast.LENGTH_LONG).show();
+            //    Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Login Failed, Please try Again !!! ", Toast.LENGTH_LONG).show();
+
                 hideDialog();
             }
         }) {
