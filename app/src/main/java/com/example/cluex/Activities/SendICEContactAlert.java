@@ -330,6 +330,8 @@ public class SendICEContactAlert extends AppCompatActivity {
        // finish();
         Intent intent = new Intent(SendICEContactAlert.this, HomeAlertActivity.class);
         startActivity(intent);
+         finish();
+
     }
 
 
