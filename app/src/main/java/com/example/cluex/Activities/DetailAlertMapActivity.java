@@ -209,9 +209,9 @@ public class DetailAlertMapActivity  extends FragmentActivity implements OnMapRe
   // onclick of cancel button
         public void onClickCancel(View view) {
 
-            Intent intent = new Intent(getApplicationContext(), HomeAlertActivity.class);
+            Intent intent = new Intent(DetailAlertMapActivity.this, HomeAlertActivity.class);
             startActivity(intent);
-
+            finish();
 
         }
 
