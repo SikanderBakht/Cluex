@@ -110,11 +110,25 @@ public class DetailAlert extends AppCompatActivity {
         alertType=extras.getString("alertType");
         detailAlertTitle.setText(alertType);
 
+        boolean isConnected=connectionStatus.is_gps_available();
+        boolean isGps=connectionStatus.checkInternetConnection();
 
-        if(!connectionStatus.is_gps_available())
-        {
-            finish();
+
+
+        if (!isConnected && !isGps) {
+            Toast.makeText(this, "Turn on internet connection and Location", Toast.LENGTH_LONG).show();
+        } else if (isConnected && !isGps) {
+
+            Toast.makeText(this, "Enable your Location ", Toast.LENGTH_LONG).show();
+
+        } else if (!isConnected && isGps) {
+            Toast.makeText(this, "Enable your internet connection ", Toast.LENGTH_LONG).show();
         }
+
+        if(!isConnected || !isGps) finish();
+
+
+
 
 
         /////////////////////////////////  incident spinner start   ////////////////////////////////////////////////////
@@ -361,6 +375,7 @@ public class DetailAlert extends AppCompatActivity {
                 whereSpinnerSelectedValue=whereSpinner.getSelectedItem().toString();
 
                 if(whereSpinnerSelectedValue==when_Array[1]){
+
 
 
 
