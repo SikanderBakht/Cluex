@@ -48,6 +48,32 @@ public class AlertAdapter extends RecyclerView.Adapter<HomeAlertActivityRecycler
 
         holder.countryName.setText(alertType);
         holder.countryPhoto.setImageResource(itemList.get(position).getPhoto());
+        holder.detailAlertButtonJava.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, DetailAlert.class);
+
+
+                intent.putExtra("alertType",alertType);
+
+                context.startActivity(intent);
+            }
+        });
+
+
+        holder.immediateAlertButtonJava.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ImmediateAlert.class);
+                intent.putExtra("alertType",alertType);
+                context.startActivity(intent);
+                Toast.makeText(context,"Immediate Alert",Toast.LENGTH_LONG).show();
+            }
+        });
+
+
 
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -73,7 +99,7 @@ public class AlertAdapter extends RecyclerView.Adapter<HomeAlertActivityRecycler
                         context.startActivity(intent);
 
 
-                          Toast.makeText(context,"You clicked yes button",Toast.LENGTH_LONG).show();
+                        Toast.makeText(context,"You clicked yes button",Toast.LENGTH_LONG).show();
                     }
                 });
 
@@ -106,16 +132,16 @@ public class AlertAdapter extends RecyclerView.Adapter<HomeAlertActivityRecycler
 
 
 
-             final AlertDialog alertDialog = alertDialogBuilder.create();
+                final AlertDialog alertDialog = alertDialogBuilder.create();
 
                 alertDialog.setOnShowListener( new DialogInterface.OnShowListener() {
-                                              @Override
-                                              public void onShow(DialogInterface arg0) {
-                                                  alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(context.getResources().getColor(R.color.textColor));
-                                                  alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(context.getResources().getColor(R.color.textColor));
-                                                  alertDialog.getButton(AlertDialog.BUTTON_NEUTRAL).setTextColor(context.getResources().getColor(R.color.textColor));
-                                              }
-                                          });
+                    @Override
+                    public void onShow(DialogInterface arg0) {
+                        alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(context.getResources().getColor(R.color.textColor));
+                        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(context.getResources().getColor(R.color.textColor));
+                        alertDialog.getButton(AlertDialog.BUTTON_NEUTRAL).setTextColor(context.getResources().getColor(R.color.textColor));
+                    }
+                });
 
 
                 alertDialog.show();
