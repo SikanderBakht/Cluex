@@ -348,7 +348,7 @@ public class ImmediateAlert extends FragmentActivity implements OnMapReadyCallba
         Intent intent = new Intent(this, addComment_ImmediateAlertActivity.class);
         intent.putExtra("alertType", alert_type);
         //    startActivity(intent);
-        startActivityForResult(intent, 2);// Activity is started with requestCode 2
+        startActivityForResult(intent, 7);// Activity is started with requestCode 2
 
 
     }
@@ -359,7 +359,7 @@ public class ImmediateAlert extends FragmentActivity implements OnMapReadyCallba
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         // check if the request code is same as what is passed  here it is 2
-        if (requestCode == 2) {
+        if (requestCode == 7) {
             commentOnAlert = data.getStringExtra("COMMENT");
 
             description = commentOnAlert;   //parameter
