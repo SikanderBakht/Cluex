@@ -61,14 +61,19 @@ public class AlertAdapter extends RecyclerView.Adapter<HomeAlertActivityRecycler
 
 
                 alertDialogBuilder.setPositiveButton("Immediate Alert", new DialogInterface.OnClickListener() {
-
                     @Override
                     public void onClick(DialogInterface arg0, int arg1) {
                         Intent intent = new Intent(context, ImmediateAlert.class);
+
+
                         intent.putExtra("alertType",alertType);
+
+                        Log.d("checkMe",alertType);
+
                         context.startActivity(intent);
 
 
+                          Toast.makeText(context,"You clicked yes button",Toast.LENGTH_LONG).show();
                     }
                 });
 
