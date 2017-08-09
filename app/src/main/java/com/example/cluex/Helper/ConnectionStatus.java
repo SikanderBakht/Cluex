@@ -80,7 +80,7 @@ public class ConnectionStatus {
         if (!gps_enabled && !network_enabled) {
 
 
-            Toast.makeText(context,"Enable your location",Toast.LENGTH_LONG).show();
+         //   Toast.makeText(context,"Enable your location",Toast.LENGTH_LONG).show();
             return false;
 
         }
