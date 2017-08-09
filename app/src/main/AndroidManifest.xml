@@ -40,6 +40,7 @@
             android:value="@string/google_maps_key" />
 
         <activity android:name=".Activities.LoginActivity">
+
           </activity>
         <activity android:name=".Activities.MobileContactsActivity" />
         <activity android:name=".Activities.ICEContactsActivity" />
