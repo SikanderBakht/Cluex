@@ -25,8 +25,8 @@ public class addComment_ImmediateAlertActivity extends AppCompatActivity {
 
         Toolbar topToolBar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(topToolBar);
-        topToolBar.setLogo(R.drawable.logo);
-        topToolBar.setLogoDescription(getResources().getString(R.string.logo_desc));
+      //  topToolBar.setLogo(R.drawable.logo);
+      //  topToolBar.setLogoDescription(getResources().getString(R.string.logo_desc));
 
         comment_editText=(EditText) findViewById(R.id.comment_editText_id);
 
