@@ -327,10 +327,10 @@ public class SendICEContactAlert extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-       // finish();
-        Intent intent = new Intent(SendICEContactAlert.this, HomeAlertActivity.class);
-        startActivity(intent);
-         finish();
+
+        Intent intent = new Intent(getApplicationContext(), HomeAlertActivity.class);
+        this.startActivity(intent);
+        // finish();
 
     }
 
