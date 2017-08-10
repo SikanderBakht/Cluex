@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.cluex.R;
@@ -13,17 +15,43 @@ import com.example.cluex.R;
 
 public class addComment_ImmediateAlertActivity extends AppCompatActivity {
 
-    EditText comment_editText;
-    String alert_type;
+    private EditText comment_editText;
+    private String alert_type;
+    private Button addImmediateAlertDetailsBtnJava;
+    private Button cancelImmedaiteAlertButtonJava;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_comment__immediate_alert);
 
+        addImmediateAlertDetailsBtnJava = (Button) findViewById(R.id.add_immediate_alert_detail_btn_xml);
+        cancelImmedaiteAlertButtonJava = (Button) findViewById(R.id.cancel_immediate_alert_detail_btn_xml);
+
+        addImmediateAlertDetailsBtnJava.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String str_comment=comment_editText.getText().toString();
+
+
+                Intent intent=new Intent();
+                intent.putExtra("COMMENT",str_comment);
+                setResult(2,intent);
+                finish();//finishing activity
+            }
+        });
+
+        cancelImmedaiteAlertButtonJava.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent backIntent = new Intent(addComment_ImmediateAlertActivity.this, ImmediateAlert.class);
+                startActivity(backIntent);
+                finish();
+            }
+        });
 
         setTitle(null);
 
-        Toolbar topToolBar = (Toolbar)findViewById(R.id.toolbar);
+        Toolbar topToolBar = (Toolbar)findViewById(R.id.add_commentimmediate_alert_toolbar_xml);
         setSupportActionBar(topToolBar);
       //  topToolBar.setLogo(R.drawable.logo);
       //  topToolBar.setLogoDescription(getResources().getString(R.string.logo_desc));
@@ -43,60 +71,12 @@ public class addComment_ImmediateAlertActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_comment, menu);
-        return true;
-    }
 
 
-    @Override
-    public void onBackPressed() {
-
-        String str_comment=comment_editText.getText().toString();
 
 
-        Intent intent=new Intent();
-        intent.putExtra("COMMENT",str_comment);
-        setResult(2,intent);
-        finish();//finishing activity
 
 
-    }
 
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        int id = item.getItemId();
-
-
-        if(id == R.id.back_id){
-
-
-          /*  Intent intent=new Intent(this,ImmediateAlert.class);
-            intent.putExtra("alertType",alert_type);
-            startActivity(intent);
-            */
-
-          String str_comment=comment_editText.getText().toString();
-
-
-            Intent intent=new Intent();
-            intent.putExtra("COMMENT",str_comment);
-            setResult(2,intent);
-            finish();//finishing activity
-            
-
-
-        }
-        if(id == R.id.delete_id){
-
-            comment_editText.setText("");
-
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
 }

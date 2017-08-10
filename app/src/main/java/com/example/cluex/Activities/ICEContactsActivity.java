@@ -312,7 +312,7 @@ public class ICEContactsActivity extends AppCompatActivity {
 //@Override
     // public boolean onCreateOptionsMenu(Menu menu) {
     // Inflate the menu; this adds items to the action bar if it is present.
-    //   getMenuInflater().inflate(R.menu.menu_main, menu);
+    //   getMenuInflater().inflate(R.menu.home_alert_menu_icons, menu);
     //  return true;
     //}
 

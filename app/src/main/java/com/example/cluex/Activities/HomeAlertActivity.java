@@ -14,7 +14,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.example.cluex.BuildConfig;
 import com.example.cluex.Helper.AlertAdapter;
@@ -140,7 +139,7 @@ public class HomeAlertActivity extends AppCompatActivity {
 
 
 
-
+        createClueXImageGallery();
         session = new SessionManager(getApplicationContext());
         session.checkLogin();
 
@@ -159,7 +158,7 @@ public class HomeAlertActivity extends AppCompatActivity {
 
         setTitle(null);
 
-        Toolbar topToolBar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar topToolBar = (Toolbar) findViewById(R.id.home_alert_toolbar_xml);
         setSupportActionBar(topToolBar);
 
 
@@ -196,7 +195,7 @@ public class HomeAlertActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.home_alert_menu_icons, menu);
         return true;
     }
 
@@ -210,7 +209,7 @@ public class HomeAlertActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.home_page_alert_toolbar_camera_icon) {
 
-            createClueXImageGallery();
+
             takePhoto();
 
 
