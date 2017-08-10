@@ -77,7 +77,7 @@ public class ICEContactsActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
 
 
-        Toast.makeText(getApplicationContext(), "You clicked on NO " + appli.setContactDatas.size(), Toast.LENGTH_SHORT).show();
+    //    Toast.makeText(getApplicationContext(), "You clicked on NO " + appli.setContactDatas.size(), Toast.LENGTH_SHORT).show();
 
 
 
@@ -216,7 +216,13 @@ public class ICEContactsActivity extends AppCompatActivity {
 
 
 
+    @Override
+    public void onBackPressed() {
 
+        finish();
+        Intent intent = new Intent(ICEContactsActivity.this, HomeAlertActivity.class);
+        startActivity(intent);
+    }
 
 
 
@@ -306,7 +312,7 @@ public class ICEContactsActivity extends AppCompatActivity {
 //@Override
     // public boolean onCreateOptionsMenu(Menu menu) {
     // Inflate the menu; this adds items to the action bar if it is present.
-    //   getMenuInflater().inflate(R.menu.menu_main, menu);
+    //   getMenuInflater().inflate(R.menu.home_alert_menu_icons, menu);
     //  return true;
     //}
 

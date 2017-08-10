@@ -20,6 +20,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.example.cluex.Helper.AppConfig;
 import com.example.cluex.Helper.AppController;
+import com.example.cluex.Helper.ConnectionStatus;
 import com.example.cluex.Helper.inputValidation;
 import com.example.cluex.R;
 import com.example.cluex.SQL.SQLiteHandler;
@@ -53,6 +54,7 @@ public class SignUPActivity extends AppCompatActivity {
     private ProgressDialog pDialog;
     private SessionManager session;
     private SQLiteHandler db;
+    private ConnectionStatus connectionStatusObj;
 
     private inputValidation inputValidationSignup;
 
@@ -69,6 +71,7 @@ public class SignUPActivity extends AppCompatActivity {
         btnRegister = (Button) findViewById(R.id.btnRegister);
 
         btnLinkToLogin = (Button) findViewById(R.id.btnLinkToLoginScreen);
+        connectionStatusObj=new ConnectionStatus(this);
 
 
 
@@ -124,7 +127,13 @@ public class SignUPActivity extends AppCompatActivity {
                             .show();
                 } */
 
-                attemptSignUp();
+                if(connectionStatusObj.checkInternetConnection())
+                    attemptSignUp();
+                else {
+                    Toast.makeText(getApplicationContext(), "Check your Internet Connection please! ", Toast.LENGTH_LONG).show();
+                }
+
+
 
             }
         });
@@ -198,10 +207,10 @@ public class SignUPActivity extends AppCompatActivity {
                       //  String currentDateandTime = sdf.format(new Date());
 
 
-                        db.deleteUsers();
-                        db.addUser(name,email,date);
+                //        db.deleteUsers();
+                //        db.addUser(name,email,date);
 
-                        Toast.makeText(getApplicationContext(),date, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),name+" Sucessfully Registered!", Toast.LENGTH_SHORT).show();
 
                     //    Toast.makeText(getApplicationContext(), "User successfully registered. Try login now!", Toast.LENGTH_LONG).show();
 
@@ -246,7 +255,10 @@ public class SignUPActivity extends AppCompatActivity {
                         } else {
 
 
-                            Toast.makeText(getApplicationContext(), errorMsg, Toast.LENGTH_LONG).show();
+                         //   Toast.makeText(getApplicationContext(), errorMsg, Toast.LENGTH_LONG).show();
+
+                            Toast.makeText(getApplicationContext(), name +" can not registered, Please try Again!!! ", Toast.LENGTH_LONG).show();
+
                         }
                     }
                 }
@@ -262,8 +274,9 @@ public class SignUPActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e(TAG, "Registration Error: " + error.getMessage());
-                Toast.makeText(getApplicationContext(),
-                        error.getMessage(), Toast.LENGTH_LONG).show();
+            //    Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Sign up Failed, Please try Again !!! ", Toast.LENGTH_LONG).show();
+
                 hideDialog();
             }
         }) {

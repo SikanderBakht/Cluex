@@ -12,6 +12,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
@@ -179,7 +180,7 @@ public class DetailAlertMapActivity  extends FragmentActivity implements OnMapRe
 
                 public void onClick(View view) {
 
-                    Intent intent = new Intent(getApplicationContext(), HomeAlertActivity.class);
+                    Intent intent = new Intent(DetailAlertMapActivity.this, HomeAlertActivity.class);
 
                     startActivity(intent);
 
@@ -205,99 +206,150 @@ public class DetailAlertMapActivity  extends FragmentActivity implements OnMapRe
 
 
 
-  // onclick of cancel button
-        public void onClickCancel(View view) {
+    // onclick of cancel button
+    public void onClickCancelAlert(View view) {
 
-            Intent intent = new Intent(getApplicationContext(), HomeAlertActivity.class);
-            startActivity(intent);
+        Intent intent = new Intent(getApplicationContext(), HomeAlertActivity.class);
+        startActivity(intent);
+        finish();
 
 
-        }
+    }
 
         public void onClickSubmit(View view) {
 
-            RegisteredUser_ID = session.getUsername(username);
-            Toast.makeText(this, RegisteredUser_ID, Toast.LENGTH_SHORT).show();
-
-            // Tag used to cancel the request
-            String tag_string_req = "req_postAlert";
-
-            pDialog.setMessage("posting alert ...");
-            //  showDialog();
-
-            StringRequest strReq = new StringRequest(Request.Method.POST,
-                    AppConfig.URL_ImmediateAlert, new Response.Listener<String>() {
-
-                @Override
-                public void onResponse(String response) {
-                    Log.d(TAG, "Login Response: " + response.toString());
-                    //        hideDialog();
-
-                    try {
-                        JSONObject jObj = new JSONObject(response);
-                        boolean error = jObj.getBoolean("error");
-
-                        // Check for error node in json
-                        if (!error) {
 
 
-                            Toast.makeText(getApplicationContext(), "Alert has been posted", Toast.LENGTH_SHORT).show();
+            AlertDialog.Builder builder;
 
-                            // Launch main activity
-                            Intent intent = new Intent(DetailAlertMapActivity.this, HomeAlertActivity.class);
-                            startActivity(intent);
-                            finish();
-                        } else {
-                            // Error in login. Get the error message
-                            String errorMsg = jObj.getString("error_msg");
-                            Toast.makeText(getApplicationContext(),
-                                    errorMsg, Toast.LENGTH_LONG).show();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                builder = new AlertDialog.Builder(DetailAlertMapActivity.this, android.R.style.Theme_DeviceDefault_Light_Dialog_Alert);
+            } else {
+                builder = new AlertDialog.Builder(DetailAlertMapActivity.this);
+            }
+
+
+            builder.setCancelable(false)
+
+                    .setPositiveButton("Submit Alert", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog,int which) {
+
+
+                            RegisteredUser_ID = session.getUsername(username);
+                            Toast.makeText(DetailAlertMapActivity.this, RegisteredUser_ID, Toast.LENGTH_SHORT).show();
+
+                            // Tag used to cancel the request
+                            String tag_string_req = "req_postAlert";
+
+                            pDialog.setMessage("posting alert ...");
+                            //  showDialog();
+
+                            StringRequest strReq = new StringRequest(Request.Method.POST,
+                                    AppConfig.URL_ImmediateAlert, new Response.Listener<String>() {
+
+                                @Override
+                                public void onResponse(String response) {
+                                    Log.d(TAG, "Login Response: " + response.toString());
+                                    //        hideDialog();
+
+                                    try {
+                                        JSONObject jObj = new JSONObject(response);
+                                        boolean error = jObj.getBoolean("error");
+
+                                        // Check for error node in json
+                                        if (!error) {
+
+
+                                            Toast.makeText(getApplicationContext(), "Alert has been posted", Toast.LENGTH_SHORT).show();
+
+                                            // Launch main activity
+                                            Intent intent = new Intent(DetailAlertMapActivity.this, HomeAlertActivity.class);
+                                            startActivity(intent);
+                                            finish();
+                                        } else {
+                                            // Error in login. Get the error message
+                                            String errorMsg = jObj.getString("error_msg");
+                                            Toast.makeText(getApplicationContext(),
+                                                    errorMsg, Toast.LENGTH_LONG).show();
+                                        }
+                                    } catch (JSONException e) {
+                                        // JSON error
+                                        e.printStackTrace();
+                                        Toast.makeText(getApplicationContext(), "Json error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                                    }
+
+                                }
+                            }, new Response.ErrorListener() {
+
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    Log.e(TAG, "Post Alert Error: " + error.getMessage());
+                                    Toast.makeText(getApplicationContext(),
+                                            error.getMessage(), Toast.LENGTH_LONG).show();
+                                    //     hideDialog();
+                                }
+                            }) {
+
+                                @Override
+                                protected Map<String, String> getParams() {
+                                    // Posting parameters to login url
+                                    Map<String, String> params = new HashMap<String, String>();
+                                    params.put("username", RegisteredUser_ID);
+                                    params.put("latitude", lat.toString());
+                                    params.put("longitude", lng.toString());
+                                    params.put("title", title);
+                                    params.put("type", type);
+                                    params.put("severe", severe);
+                                    params.put("description", description);
+                                    params.put("country", countryName);
+                                    params.put("zipCode", zipCode);
+                                    params.put("city", cityName);
+                                    params.put("state", state);
+                                    params.put("province", province);
+                                    params.put("streetAddress", streetAddress);
+                                    params.put("incidentTime", incidentTime);
+                                    params.put("incidentPlace", incidentPlace);
+
+                                    return params;
+                                }
+
+                            };
+
+                            // Adding request to request queue
+                            AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+
                         }
-                    } catch (JSONException e) {
-                        // JSON error
-                        e.printStackTrace();
-                        Toast.makeText(getApplicationContext(), "Json error: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                    }
+                        })
 
-                }
-            }, new Response.ErrorListener() {
+                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
 
+                        }
+                    })
+
+                    .setIcon(R.drawable.ic_launcher)
+
+                    .setTitle("Alert")
+
+                    .setMessage("Are you sure you want to submit alert?");
+
+            final AlertDialog diag = builder.create();
+
+            diag.setOnShowListener( new DialogInterface.OnShowListener() {
                 @Override
-                public void onErrorResponse(VolleyError error) {
-                    Log.e(TAG, "Post Alert Error: " + error.getMessage());
-                    Toast.makeText(getApplicationContext(),
-                            error.getMessage(), Toast.LENGTH_LONG).show();
-                    //     hideDialog();
+                public void onShow(DialogInterface arg0) {
+                    diag.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.textColor));
+                    diag.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.textColor));
+                    diag.getButton(AlertDialog.BUTTON_NEUTRAL).setTextColor(getResources().getColor(R.color.textColor));
                 }
-            }) {
+            });
 
-                @Override
-                protected Map<String, String> getParams() {
-                    // Posting parameters to login url
-                    Map<String, String> params = new HashMap<String, String>();
-                    params.put("username", RegisteredUser_ID);
-                    params.put("latitude", lat.toString());
-                    params.put("longitude", lng.toString());
-                    params.put("title", title);
-                    params.put("type", type);
-                    params.put("severe", severe);
-                    params.put("description", description);
-                    params.put("country",countryName);
-                    params.put("zipCode",zipCode);
-                    params.put("city",cityName);
-                    params.put("state",state);
-                    params.put("province",province);
-                    params.put("streetAddress",streetAddress);
-                    params.put("incidentTime",incidentTime);
-                    params.put("incidentPlace",incidentPlace);
+            diag.show();
 
-                    return params;
-                }
 
-            };
 
-            // Adding request to request queue
-            AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+
 
         }
 

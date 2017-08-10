@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.cluex.Activities.HomeAlertActivity">
 
+
     <item
 
         android:id="@+id/home_page_alert_toolbar_camera_icon"
@@ -22,12 +23,6 @@
         android:title="@string/action_settings"
         android:orderInCategory="3"
         app:showAsAction="never" />
-
-
-
-
-
-
 
 
 

@@ -104,7 +104,7 @@
                     android:id="@+id/when_image_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_place_black_24dp"/>
+                    android:src="@drawable/ic_schedule_black_24dp"/>
 
 
                     <Spinner
