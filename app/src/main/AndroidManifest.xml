@@ -39,14 +39,12 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".Activities.LoginActivity"></activity>
+        <activity android:name=".Activities.LoginActivity" />
         <activity android:name=".Activities.MobileContactsActivity" />
-
         <activity android:name=".Activities.AddContact" />
         <activity android:name=".Activities.DetailAlertMapActivity" />
         <activity android:name=".Activities.DetailAlert" />
         <activity android:name=".Activities.SignUPActivity" />
-
         <activity android:name=".Activities.addComment_ImmediateAlertActivity" />
         <activity
             android:name=".Activities.MapsActivity"
@@ -66,9 +64,7 @@
 
         <activity android:name=".Activities.CameraActivity" />
         <activity android:name=".Activities.imageSliderActivity" />
-        <activity android:name=".Activities.SplashScreen">
-
-        </activity>
+        <activity android:name=".Activities.SplashScreen"></activity>
         <activity
             android:name=".Activities.CluexAfterLoginNavigationDrawer"
             android:label="@string/title_activity_cluex_after_login_navigation_drawer"
@@ -79,6 +75,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Activities.MapsActivityNotificationZone"></activity>
     </application>
 
 </manifest>

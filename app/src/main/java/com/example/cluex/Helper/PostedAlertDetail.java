@@ -1,12 +1,5 @@
 package com.example.cluex.Helper;
 
-import android.location.Location;
-
-import com.google.android.gms.maps.model.LatLng;
-
-import java.sql.Date;
-import java.sql.Time;
-
 /**
  * Created by Awais on 7/27/2017.
  */
@@ -18,6 +11,7 @@ public class PostedAlertDetail {
     private String postedAlertTitle;
     private String postedAlertTime;
     private String postedAlertDate;
+    private int radius;
 
 
 
@@ -28,15 +22,17 @@ public class PostedAlertDetail {
         postedAlertTitle="";
        postedAlertDate="";
        postedAlertTime="";
+       radius=0;
     }
 
-    public  PostedAlertDetail(double lat, double lng, String title,String d, String t ){
+    public PostedAlertDetail(double lat, double lng, String title, String d, String t, int r ){
 
         postedAlertLat=lat;
         postedAlertLng=lng;
         postedAlertTitle=title;
         postedAlertTime=t;
         postedAlertDate=d;
+        radius=r;
 
     }
 
@@ -52,6 +48,7 @@ public class PostedAlertDetail {
     public void setPostedAlertTitle(String title){
         postedAlertTitle=title;
     }
+    public void setPostedAlertRadius(int Radius) {radius=Radius;}
 
     public double getPostedAlertLat()
     {
@@ -75,5 +72,7 @@ public class PostedAlertDetail {
     {
         return postedAlertDate;
     }
+
+    public int getPostedAlertRadius() {return radius;}
 
 }

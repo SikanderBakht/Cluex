@@ -122,8 +122,9 @@ public class CluexAfterLoginNavigationDrawer extends AppCompatActivity implement
 
                     return true;
                 case R.id.bottom_navigation_newsfeed_xml:
-                    Intent intent = new Intent(CluexAfterLoginNavigationDrawer.this, MapsActivity.class);
+                    Intent intent = new Intent(CluexAfterLoginNavigationDrawer.this, MapsActivityNotificationZone.class);
                     startActivity(intent);
+                    return true;
                 case R.id.bottom_navigation_maps_xml:
                     Intent CheckIntent = new Intent(CluexAfterLoginNavigationDrawer.this, MapsActivity.class);
                     startActivity(CheckIntent);
