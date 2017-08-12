@@ -16,10 +16,12 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
@@ -203,8 +205,20 @@ public class ImmediateAlert extends FragmentActivity implements OnMapReadyCallba
     // onclick of cancel button
     public void onClickCancel(View view) {
 
-        Intent intent = new Intent(this, HomeAlertActivity.class);
-        startActivity(intent);
+        Fragment fragmentHomeAlert = new HomeAlertActivity();
+
+
+        if(fragmentHomeAlert != null)
+        {
+            FragmentTransaction navToSelectedFragTrans = getSupportFragmentManager().beginTransaction();
+            navToSelectedFragTrans.replace(R.id.immediate_alert_activity_xml, fragmentHomeAlert);
+            navToSelectedFragTrans.addToBackStack(null);
+            navToSelectedFragTrans.commit();
+
+        }
+
+        /*Intent intent = new Intent(this, HomeAlertActivity.class);
+        startActivity(intent);*/
         finish();
 
     }
@@ -257,8 +271,19 @@ public class ImmediateAlert extends FragmentActivity implements OnMapReadyCallba
                             Toast.makeText(getApplicationContext(), "Alert has been posted", Toast.LENGTH_SHORT).show();
 
                             // Launch main activity
-                            Intent intent = new Intent(ImmediateAlert.this, HomeAlertActivity.class);
-                            startActivity(intent);
+                            Fragment fragmentHomeAlert = new HomeAlertActivity();
+
+
+                            if(fragmentHomeAlert != null)
+                            {
+                                FragmentTransaction navToSelectedFragTrans = getSupportFragmentManager().beginTransaction();
+                                navToSelectedFragTrans.replace(R.id.immediate_alert_activity_xml, fragmentHomeAlert);
+                                navToSelectedFragTrans.addToBackStack(null);
+                                navToSelectedFragTrans.commit();
+
+                            }
+                            /*Intent intent = new Intent(ImmediateAlert.this, HomeAlertActivity.class);
+                            startActivity(intent);*/
                             finish();
                         } else {
                             // Error in login. Get the error message

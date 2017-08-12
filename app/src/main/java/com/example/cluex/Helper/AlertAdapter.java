@@ -24,6 +24,8 @@ import com.example.cluex.Activities.DetailAlert;
 
 public class AlertAdapter extends RecyclerView.Adapter<HomeAlertActivityRecyclerViewHolder> {
 
+
+
     private List<AlertIconsDetails> itemList;
     private Context context;
 

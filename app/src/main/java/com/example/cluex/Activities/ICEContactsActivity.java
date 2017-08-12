@@ -4,12 +4,17 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.view.menu.MenuView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -36,13 +41,13 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ICEContactsActivity extends AppCompatActivity {
+public class ICEContactsActivity extends Fragment {
 
     //  private static final android.R.attr R = ;
     ArrayList<SetContactData> setContactDatas=new ArrayList<SetContactData>();
     ListView listView;
-    Button button1;
-    Button button2;
+    Button addContactBtnJava;
+    Button CancelBtnJava;
     private ICEContactsCustomAdapter adapter;
     private SessionManager session;
     private String RegisteredUser_ID;
@@ -52,6 +57,185 @@ public class ICEContactsActivity extends AppCompatActivity {
     MenuView.ItemView ch;
    // private JSONArray<obj> hello=new JSONArray();
 
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        return inflater.inflate(R.layout.activity_icecontacts, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);button8
+
+        appli=new AppController();
+        listView=(ListView) view.findViewById(R.id.list);
+        addContactBtnJava = (Button) view.findViewById(R.id.add_contact_btn_ice_contact_activity_xml);
+        CancelBtnJava=(Button) view.findViewById(R.id.cancel_btn_ice_contact_activity_xml);
+        // ch=  (MenuView.ItemView) findViewById(R.id.item_info);
+        //   setContactDatas = new ArrayList<>();
+        session = new SessionManager(getActivity());
+        RegisteredUser_ID = session.getUsername(username);
+        //  RegisteredUser_ID="salman";
+//        ICEContactFillUp(RegisteredUser_ID);
+
+        adapter= new ICEContactsCustomAdapter(appli.setContactDatas,getActivity());
+
+
+
+        listView.setAdapter(adapter);
+
+
+        //    Toast.makeText(getApplicationContext(), "You clicked on NO " + appli.setContactDatas.size(), Toast.LENGTH_SHORT).show();
+
+
+
+
+        //  appli=(AppController) getApplicationContext();
+
+
+
+
+
+        //JSONGETFUNCTION
+
+        // ICEContactFillUp(RegisteredUser_ID);
+
+        //  setContactDatas.add(new SetContactData("Salman", "03218832069"));
+        // int size= setContactDatas.size();
+
+
+
+//        if(appli.checking.matches("CHECK"))
+        //      {
+
+
+        //        adapter.notifyDataSetChanged();
+
+        //  }
+
+
+
+
+        addContactBtnJava.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                AlertDialog.Builder builder;
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    builder = new AlertDialog.Builder(getActivity(), android.R.style.Theme_Material_Dialog_Alert);
+                } else {
+                    builder = new AlertDialog.Builder(getActivity());
+                }
+
+
+
+                builder.setCancelable(false)
+
+                        .setPositiveButton("Add New Contact", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int which) {
+
+                                //Intent myIntent = new Intent(getApplicationContext(),AddContact.class);
+                                //  myIntent.putExtra("key", value); //Optional parameters
+                                //   startActivity(myIntent);
+
+                                Intent i = new Intent(getActivity(), AddContact.class);
+                                startActivityForResult(i, 1);
+
+
+                                // Write your code here to invoke YES event
+
+                                //  Toast.makeText(getApplicationContext(), "You clicked on YES", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+
+                        .setNegativeButton("Add From Contacts", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                Intent i = new Intent(getActivity(), MobileContactsActivity.class);
+                                startActivityForResult(i, 2);
+
+
+                                // Write your code here to invoke NO event
+                                // Toast.makeText(getApplicationContext(), "You clicked on NO", Toast.LENGTH_SHORT).show();
+
+                            }
+                        })
+
+
+                        .setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // User pressed Cancel button. Write Logic Here
+                                // Toast.makeText(getApplicationContext(), "You clicked on Cancel",
+                                //       Toast.LENGTH_SHORT).show();
+
+                                dialog.cancel();
+                            }
+                        })
+
+
+
+                        .setIcon(R.drawable.ic_launcher)
+
+                        .setTitle("Alert")
+
+                        .setMessage("This is 1 Action alert Dialog, Press OK to continue");
+
+                final AlertDialog diag = builder.create();
+
+                diag.setOnShowListener( new DialogInterface.OnShowListener() {
+                    @Override
+                    public void onShow(DialogInterface arg0) {
+                        diag.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.textColor));
+                        diag.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.textColor));
+                        diag.getButton(AlertDialog.BUTTON_NEUTRAL).setTextColor(getResources().getColor(R.color.textColor));
+                    }
+                });
+
+                diag.show();
+
+
+                //   Intent myIntent = new Intent(getApplicationContext(),HomeAlertActivity.class);
+                //  myIntent.putExtra("key", value); //Optional parameters
+                //        startActivity(myIntent);
+
+            }
+        });
+
+
+        CancelBtnJava.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragmentHomeAlert = new HomeAlertActivity();
+
+
+                if(fragmentHomeAlert != null)
+                {
+                    FragmentTransaction navToSelectedFragTrans = getActivity().getSupportFragmentManager().beginTransaction();
+                    navToSelectedFragTrans.replace(R.id.after_login_nav_drawer_content_xml, fragmentHomeAlert);
+                    navToSelectedFragTrans.addToBackStack(null);
+                    navToSelectedFragTrans.commit();
+
+
+
+                }
+
+                /*Intent intent = new Intent(getActivity(), HomeAlertActivity.class);
+                startActivity(intent);*/
+
+
+
+            }
+
+        });
+    }
+
+/*
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,8 +245,8 @@ public class ICEContactsActivity extends AppCompatActivity {
 
         appli=new AppController();
         listView=(ListView)findViewById(R.id.list);
-        button1 = (Button) findViewById(R.id.button8);
-        button2=(Button) findViewById(R.id.button4);
+        addContactBtnJava = (Button) findViewById(R.id.add_contact_btn_ice_contact_activity_xml);
+        CancelBtnJava=(Button) findViewById(R.id.cancel_btn_ice_contact_activity_xml);
      // ch=  (MenuView.ItemView) findViewById(R.id.item_info);
      //   setContactDatas = new ArrayList<>();
         session = new SessionManager(getApplicationContext());
@@ -108,7 +292,7 @@ public class ICEContactsActivity extends AppCompatActivity {
 
 
 
-                button1.setOnClickListener(new View.OnClickListener() {
+        addContactBtnJava.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -195,9 +379,10 @@ public class ICEContactsActivity extends AppCompatActivity {
         });
 
 
-        button2.setOnClickListener(new View.OnClickListener() {
+        CancelBtnJava.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
 
 
                 Intent intent = new Intent(ICEContactsActivity.this, HomeAlertActivity.class);
@@ -226,6 +411,7 @@ public class ICEContactsActivity extends AppCompatActivity {
 
 
 
+*/
 
 
 
@@ -237,8 +423,7 @@ public class ICEContactsActivity extends AppCompatActivity {
 
 
 
-
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
         // check if the request code is same as what is passed  here it is 2
@@ -335,7 +520,7 @@ public class ICEContactsActivity extends AppCompatActivity {
     public void checker()
     {
 
-        adapter= new ICEContactsCustomAdapter(appli.setContactDatas,getApplicationContext());
+        adapter= new ICEContactsCustomAdapter(appli.setContactDatas,getActivity());
 
 
 
@@ -383,7 +568,7 @@ public class ICEContactsActivity extends AppCompatActivity {
 
                         Log.d("saluMAN","Is it working?");
 
-                        Toast.makeText(getApplicationContext(), "Succesfully Added Contact", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), "Succesfully Added Contact", Toast.LENGTH_LONG).show();
 
                         // Launch login activity
 
@@ -394,7 +579,7 @@ public class ICEContactsActivity extends AppCompatActivity {
 
                         // Error occurred in registration. Get the error message
                         String errorMsg = jObj.getString("error_msg");
-                        Toast.makeText(getApplicationContext(), errorMsg, Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), errorMsg, Toast.LENGTH_LONG).show();
 
                     }
                 }
@@ -411,7 +596,7 @@ public class ICEContactsActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                // Log.e(TAG, "Registration Error: " + error.getMessage());
                 Log.d("Jani","hello");
-                Toast.makeText(getApplicationContext(),
+                Toast.makeText(getActivity(),
                         error.getMessage(), Toast.LENGTH_LONG).show();
        //         hideDialog();
             }
@@ -543,7 +728,7 @@ public class ICEContactsActivity extends AppCompatActivity {
                         Log.d("io", "Register Response3: " );
                         // Error occurred in registration. Get the error message
                         String errorMsg1 = jObj.getString("error_msg");
-                        Toast.makeText(getApplicationContext(), errorMsg1, Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), errorMsg1, Toast.LENGTH_LONG).show();
 
                     }
                 }
@@ -561,7 +746,7 @@ public class ICEContactsActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 // Log.e(TAG, "Registration Error: " + error.getMessage());
                 Log.d("io", "Register Response4: " );
-                Toast.makeText(getApplicationContext(),
+                Toast.makeText(getActivity(),
                         error.getMessage(), Toast.LENGTH_LONG).show();
                 //         hideDialog();
             }

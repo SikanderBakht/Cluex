@@ -86,7 +86,7 @@ public class LoginActivity extends AppCompatActivity {
         // Check if user is already logged in or not
         if (session.isLoggedIn()) {
             // User is already logged in. Take him to main activity
-            Intent intent = new Intent(LoginActivity.this,HomeAlertActivity.class);
+            Intent intent = new Intent(LoginActivity.this,CluexAfterLoginNavigationDrawer.class);
             startActivity(intent);
             finish();
         }
@@ -167,8 +167,7 @@ public class LoginActivity extends AppCompatActivity {
                         db.addUser(name, email, uid, created_at);
 */
                         // Launch main activity
-                        Intent intent = new Intent(LoginActivity.this,
-                                HomeAlertActivity.class);
+                        Intent intent = new Intent(LoginActivity.this, CluexAfterLoginNavigationDrawer.class);
                         Toast.makeText(getApplicationContext(),
                                 "Logged in Successfuly!", Toast.LENGTH_LONG).show();
                         startActivity(intent);

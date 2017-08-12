@@ -39,24 +39,19 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".Activities.LoginActivity">
-
-          </activity>
+        <activity android:name=".Activities.LoginActivity"></activity>
         <activity android:name=".Activities.MobileContactsActivity" />
-        <activity android:name=".Activities.ICEContactsActivity" />
+
         <activity android:name=".Activities.AddContact" />
         <activity android:name=".Activities.DetailAlertMapActivity" />
         <activity android:name=".Activities.DetailAlert" />
         <activity android:name=".Activities.SignUPActivity" />
-        <activity
-            android:name=".Activities.HomeAlertActivity"
-            android:label="@string/title_activity_main" />
+
         <activity android:name=".Activities.addComment_ImmediateAlertActivity" />
         <activity
             android:name=".Activities.MapsActivity"
             android:label="@string/title_activity_maps" />
         <activity android:name=".Activities.ImmediateAlert" />
-
         <activity android:name=".Activities.SendICEContactAlert" />
 
         <provider
@@ -73,13 +68,16 @@
         <activity android:name=".Activities.imageSliderActivity" />
         <activity android:name=".Activities.SplashScreen">
 
+        </activity>
+        <activity
+            android:name=".Activities.CluexAfterLoginNavigationDrawer"
+            android:label="@string/title_activity_cluex_after_login_navigation_drawer"
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-
         </activity>
     </application>
 

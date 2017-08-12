@@ -68,35 +68,35 @@ public class SendICEContactAlert extends AppCompatActivity {
 
         getNumbers=new AppController();
         getNumbers = (AppController) getApplicationContext();
-      //  getNumbers.ICEContactFillUp(RegisteredUser_ID);
+        //  getNumbers.ICEContactFillUp(RegisteredUser_ID);
 
-     //   app.ICEContactFillUp(RegisteredUser_ID);
+        //   app.ICEContactFillUp(RegisteredUser_ID);
 
 
         for(int i=0;i<getNumbers.setContactDatas.size();i++) {
 
-          arrGetNumbers.add(getNumbers.setContactDatas.get(i)) ;
+            arrGetNumbers.add(getNumbers.setContactDatas.get(i)) ;
 
         }
 
         for(int i=0;i<arrGetNumbers.size();i++) {
 
-           arr.add ( arrGetNumbers.get(i).getType().toString());
+            arr.add ( arrGetNumbers.get(i).getType().toString());
 
         }
 
-    // private static final
+        // private static final
         smsBody = new StringBuffer();
 
         Bundle extras = getIntent().getExtras();
 
-       checkTypeAlert= extras.getString("alertType");
+        checkTypeAlert= extras.getString("alertType");
         //if()
 
-       //    Log.d("yo",checkTypeAlert);
+        //    Log.d("yo",checkTypeAlert);
 
 
-         userLocationObject = new UserLocation(this);
+        userLocationObject = new UserLocation(this);
 
         sendBtn = (Button) findViewById(R.id.btnSendSMS);
         cancelBtn=(Button) findViewById(R.id.btnSMSCancel);
@@ -118,7 +118,7 @@ public class SendICEContactAlert extends AppCompatActivity {
                     locationDetialsMapObject = userLocationObject.LocationDetails(latitude, longitude);
 
 
-             //       address = locationDetialsMapObject.get("url");
+                    //       address = locationDetialsMapObject.get("url");
 
                     if(txtMessage.length()==0)
                     {
@@ -139,61 +139,61 @@ public class SendICEContactAlert extends AppCompatActivity {
 
 
                                         if(checkTypeAlert.matches("Roberry"))
-                                {
-                                    alertMessage= "Robbery has taken place";
+                                        {
+                                            alertMessage= "Robbery has taken place";
 
-                                }
+                                        }
 
-                                if(checkTypeAlert.matches("Accident"))
-                                {
-                                    alertMessage= "An Accident has taken place";
+                                        if(checkTypeAlert.matches("Accident"))
+                                        {
+                                            alertMessage= "An Accident has taken place";
 
-                                }
+                                        }
 
-                                if(checkTypeAlert.matches("Medical"))
-                                {
-                                    alertMessage= "I am in medical emergency";
+                                        if(checkTypeAlert.matches("Medical"))
+                                        {
+                                            alertMessage= "I am in medical emergency";
 
-                                }
+                                        }
 
-                                if(checkTypeAlert.matches("Fire"))
-                                {
-                                    alertMessage= "Fire has been erupted";
+                                        if(checkTypeAlert.matches("Fire"))
+                                        {
+                                            alertMessage= "Fire has been erupted";
 
-                                }
+                                        }
 
-                                if(checkTypeAlert.matches("Natural Disaster"))
-                                {
-                                    alertMessage= "A Natural disaster has taken place";
+                                        if(checkTypeAlert.matches("Natural Disaster"))
+                                        {
+                                            alertMessage= "A Natural disaster has taken place";
 
-                                }
+                                        }
 
-                                if(checkTypeAlert.matches("Harassment"))
-                                {
-                                    alertMessage= "Some one is harassing me";
+                                        if(checkTypeAlert.matches("Harassment"))
+                                        {
+                                            alertMessage= "Some one is harassing me";
 
-                                }
+                                        }
 
-                                if(checkTypeAlert.matches("Kidnapping"))
-                                {
-                                    alertMessage= "I am being kidnapped";
+                                        if(checkTypeAlert.matches("Kidnapping"))
+                                        {
+                                            alertMessage= "I am being kidnapped";
 
-                                }
+                                        }
 
-                                if(checkTypeAlert.matches("Terrorist Attack"))
-                                {
-                                    alertMessage= "A terrorist attack has taken place";
+                                        if(checkTypeAlert.matches("Terrorist Attack"))
+                                        {
+                                            alertMessage= "A terrorist attack has taken place";
 
-                                }
-
-
-
-                                sendSMSMessage(latitude,longitude);
+                                        }
 
 
-                             //   Toast.makeText(context,"You clicked Send Message",Toast.LENGTH_LONG).show();
-                            }
-                        })
+
+                                        sendSMSMessage(latitude,longitude);
+
+
+                                        //   Toast.makeText(context,"You clicked Send Message",Toast.LENGTH_LONG).show();
+                                    }
+                                })
 
                                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                                     @Override
@@ -205,7 +205,7 @@ public class SendICEContactAlert extends AppCompatActivity {
                                     //    Toast.makeText(context,"You clicked Cancel",Toast.LENGTH_LONG).show();
 
 
-                        })
+                                })
 
                                 .setIcon(R.drawable.ic_launcher)
 
@@ -321,7 +321,7 @@ public class SendICEContactAlert extends AppCompatActivity {
         });
 
 
-        }
+    }
 
 
     @Override
@@ -347,7 +347,7 @@ public class SendICEContactAlert extends AppCompatActivity {
             //Do something
             count++;
             if(count==3) {
-            //    sendSMSMessage(random);
+                //    sendSMSMessage(random);
             }
 
         }
@@ -356,7 +356,7 @@ public class SendICEContactAlert extends AppCompatActivity {
 
 
     protected void sendSMSMessage(double latitude, double longitude ) {
-      //  phoneNo = arr.get(index).toString();
+        //  phoneNo = arr.get(index).toString();
 
         MessageBox= (EditText) findViewById(R.id.editText2);
         MessageInTheBox= MessageBox.getText().toString();
@@ -382,7 +382,7 @@ public class SendICEContactAlert extends AppCompatActivity {
         message=smsBody.toString();
 
 
-       // message = Address;
+        // message = Address;
 
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.SEND_SMS)
@@ -414,8 +414,8 @@ public class SendICEContactAlert extends AppCompatActivity {
                         smsManager.sendTextMessage(arr.get(i).toString(), null,message, null, null);
 
                     }
-             //       Toast.makeText(getApplicationContext(), message,
-               //             Toast.LENGTH_LONG).show();
+                    //       Toast.makeText(getApplicationContext(), message,
+                    //             Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(getApplicationContext(),
                             "SMS faild, please try again.", Toast.LENGTH_LONG).show();

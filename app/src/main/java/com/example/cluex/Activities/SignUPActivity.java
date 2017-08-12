@@ -105,8 +105,7 @@ public class SignUPActivity extends AppCompatActivity {
         // Check if user is already logged in or not
         if (session.isLoggedIn()) {
             // User is already logged in. Take him to main activity
-            Intent intent = new Intent(SignUPActivity.this,
-                    HomeAlertActivity.class);
+            Intent intent = new Intent(SignUPActivity.this, CluexAfterLoginNavigationDrawer.class);
             startActivity(intent);
             finish();
         }

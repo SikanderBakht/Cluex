@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navigation_home"
+        android:id="@+id/bottom_navigation_home_alert_xml"
         android:icon="@drawable/ic_home_black_24dp"
         android:title="@string/title_home"
         android:layout_width="wrap_content"
@@ -10,7 +10,7 @@
         />
 
     <item
-        android:id="@+id/navigation_newsfeed"
+        android:id="@+id/bottom_navigation_newsfeed_xml"
         android:icon="@drawable/ic_view_headline_black_24dp"
         android:title="Newsfeed"
         android:layout_width="wrap_content"
@@ -20,15 +20,15 @@
 
 
     <item
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/bottom_navigation_ice_contacts_xml"
         android:icon="@drawable/ic_contact_phone_black_24dp"
-        android:title="AddContact"
+        android:title="AddEmergencyContacts"
         android:layout_width="wrap_content"
         android:layout_weight="1"
         />
 
     <item
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/bottom_navigation_maps_xml"
         android:icon="@drawable/ic_map_black_24dp"
         android:title="Maps"
         android:layout_width="wrap_content"

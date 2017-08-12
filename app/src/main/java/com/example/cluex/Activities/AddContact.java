@@ -2,6 +2,8 @@ package com.example.cluex.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -65,9 +67,23 @@ public class AddContact extends AppCompatActivity implements View.OnClickListene
             @Override
             public void onClick(View v) {
 
-                Intent myIntent = new Intent(AddContact.this, ICEContactsActivity.class);
+                Fragment fragmentICEContacts = new ICEContactsActivity();
+
+
+                if(fragmentICEContacts != null)
+                {
+
+                    FragmentTransaction navToSelectedFragTrans = getSupportFragmentManager().beginTransaction();
+                    navToSelectedFragTrans.replace(R.id.add_new_ice_contact_xml, fragmentICEContacts);
+                    navToSelectedFragTrans.addToBackStack(null);
+                    navToSelectedFragTrans.commit();
+                    finish();
+
+                }
+
+                /*Intent myIntent = new Intent(AddContact.this, ICEContactsActivity.class);
                 //myIntent.putExtra("key", value); //Optional parameters
-                startActivity(myIntent);
+                startActivity(myIntent);*/
 
             }
         });
@@ -79,31 +95,44 @@ public class AddContact extends AppCompatActivity implements View.OnClickListene
 
     }
 
-    @Override
+/*    @Override
     public void onBackPressed() {
 
         finish();
         Intent intent = new Intent(AddContact.this, ICEContactsActivity.class);
         startActivity(intent);
     }
-
+*/
     public void onClick(View v) {
 
-        Intent intent = new Intent(this, HomeAlertActivity.class);
-        if (v.getId() == R.id.btnAddContact) {
-            if (edtContactName.getText().toString().equals("")
-                    && edtContactNumber.getText().toString().equals("")) {
-                Toast.makeText(this, "Please fill both fields...",
-                        Toast.LENGTH_SHORT).show();
-            } else {
-                ContactHelper.insertContact(getContentResolver(),
-                        edtContactName.getText().toString(), edtContactNumber
-                                .getText().toString());
+        //Intent intent = new Intent(this, HomeAlertActivity.class);
+        if (v.getId() == R.id.btnAddContact)
+        {
+            Fragment fragmentHomeAlert = new HomeAlertActivity();
+
+
+            if(fragmentHomeAlert != null)
+            {
+                FragmentTransaction navToSelectedFragTrans = getSupportFragmentManager().beginTransaction();
+                navToSelectedFragTrans.replace(R.id.add_new_ice_contact_xml, fragmentHomeAlert);
+                navToSelectedFragTrans.addToBackStack(null);
+                ContactHelper.insertContact(getContentResolver(), edtContactName.getText().toString(), edtContactNumber.getText().toString());
                 edtContactName.setText("");
                 edtContactNumber.setText("");
+                navToSelectedFragTrans.commit();
 
-                startActivity(intent);
             }
+            /*if (edtContactName.getText().toString().equals("") && edtContactNumber.getText().toString().equals(""))
+            {
+                Toast.makeText(this, "Please fill both fields...", Toast.LENGTH_SHORT).show();
+            }
+            else
+            {
+                ContactHelper.insertContact(getContentResolver(), edtContactName.getText().toString(), edtContactNumber.getText().toString());
+                edtContactName.setText("");
+                edtContactNumber.setText("");
+                startActivity(intent);
+            }*/
 
         }
     }

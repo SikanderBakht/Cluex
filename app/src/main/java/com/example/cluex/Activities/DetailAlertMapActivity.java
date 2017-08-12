@@ -15,7 +15,9 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -180,9 +182,20 @@ public class DetailAlertMapActivity  extends FragmentActivity implements OnMapRe
 
                 public void onClick(View view) {
 
-                    Intent intent = new Intent(DetailAlertMapActivity.this, HomeAlertActivity.class);
+                    /*Intent intent = new Intent(DetailAlertMapActivity.this, HomeAlertActivity.class);
 
-                    startActivity(intent);
+                    startActivity(intent);*/
+                    Fragment fragmentHomeAlert = new HomeAlertActivity();
+
+
+                    if(fragmentHomeAlert != null)
+                    {
+                        FragmentTransaction navToSelectedFragTrans = getSupportFragmentManager().beginTransaction();
+                        navToSelectedFragTrans.replace(R.id.detail_alert_map_activity_xml, fragmentHomeAlert);
+                        navToSelectedFragTrans.addToBackStack(null);
+                        navToSelectedFragTrans.commit();
+
+                    }
 
 
                 }
@@ -209,8 +222,19 @@ public class DetailAlertMapActivity  extends FragmentActivity implements OnMapRe
     // onclick of cancel button
     public void onClickCancelAlert(View view) {
 
-        Intent intent = new Intent(getApplicationContext(), HomeAlertActivity.class);
-        startActivity(intent);
+        /*Intent intent = new Intent(getApplicationContext(), HomeAlertActivity.class);
+        startActivity(intent);*/
+        Fragment fragmentHomeAlert = new HomeAlertActivity();
+
+
+        if(fragmentHomeAlert != null)
+        {
+            FragmentTransaction navToSelectedFragTrans = getSupportFragmentManager().beginTransaction();
+            navToSelectedFragTrans.replace(R.id.detail_alert_map_activity_xml, fragmentHomeAlert);
+            navToSelectedFragTrans.addToBackStack(null);
+            navToSelectedFragTrans.commit();
+
+        }
         finish();
 
 
@@ -263,8 +287,19 @@ public class DetailAlertMapActivity  extends FragmentActivity implements OnMapRe
                                             Toast.makeText(getApplicationContext(), "Alert has been posted", Toast.LENGTH_SHORT).show();
 
                                             // Launch main activity
-                                            Intent intent = new Intent(DetailAlertMapActivity.this, HomeAlertActivity.class);
-                                            startActivity(intent);
+                                            Fragment fragmentHomeAlert = new HomeAlertActivity();
+
+
+                                            if(fragmentHomeAlert != null)
+                                            {
+                                                FragmentTransaction navToSelectedFragTrans = getSupportFragmentManager().beginTransaction();
+                                                navToSelectedFragTrans.replace(R.id.detail_alert_map_activity_xml, fragmentHomeAlert);
+                                                navToSelectedFragTrans.addToBackStack(null);
+                                                navToSelectedFragTrans.commit();
+
+                                            }
+                                            /*Intent intent = new Intent(DetailAlertMapActivity.this, HomeAlertActivity.class);
+                                            startActivity(intent);*/
                                             finish();
                                         } else {
                                             // Error in login. Get the error message

@@ -60,6 +60,12 @@
     <string name="toggle_turn_on">Continue</string>
     <string name="toggle_turn_off">Fill all the field</string>
     <string name="title_activity_icecontacts">ICEContactsActivity</string>
+    <string name="title_activity_cluex_after_login_navigation_drawer">
+        CluexAfterLoginNavigationDrawer
+    </string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 
 
 </resources>

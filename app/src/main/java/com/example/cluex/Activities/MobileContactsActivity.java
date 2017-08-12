@@ -5,6 +5,8 @@ import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -34,7 +36,7 @@ import java.util.regex.Pattern;
 
 import static android.R.attr.value;
 
-public class MobileContactsActivity extends ListActivity {
+public class MobileContactsActivity extends AppCompatActivity {
     //private ArrayList<String> conNames;
     //private ArrayList<String> conNumbers;
     private ArrayList<SetContactData> conCont;
@@ -69,8 +71,20 @@ public class MobileContactsActivity extends ListActivity {
             @Override
             public void onClick(View v) {
 
-                Intent AddContactIntent = new Intent(getApplicationContext(), HomeAlertActivity.class);
-                startActivity(AddContactIntent);
+                Fragment fragmentHomeAlert = new HomeAlertActivity();
+
+
+                if(fragmentHomeAlert != null)
+                {
+                    FragmentTransaction navToSelectedFragTrans = getSupportFragmentManager().beginTransaction();
+                    navToSelectedFragTrans.replace(R.id.mobile_contact_activity_xml, fragmentHomeAlert);
+                    navToSelectedFragTrans.addToBackStack(null);
+                    navToSelectedFragTrans.commit();
+
+                }
+
+                /*Intent AddContactIntent = new Intent(getApplicationContext(), HomeAlertActivity.class);
+                startActivity(AddContactIntent);*/
 
 
             }
@@ -192,7 +206,7 @@ public class MobileContactsActivity extends ListActivity {
     }
 
 
-    @Override
+ /*   @Override
     public void onBackPressed() {
 
         finish();
@@ -200,7 +214,7 @@ public class MobileContactsActivity extends ListActivity {
         startActivity(intent);
     }
 
-
+*/
     public void addContact(View v)
     {
         Intent myIntent = new Intent(MobileContactsActivity.this, AddContact.class);

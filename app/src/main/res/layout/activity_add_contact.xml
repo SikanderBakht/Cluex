@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.cluex.Activities.AddContact">
+    tools:context="com.example.cluex.Activities.AddContact"
+    android:id="@+id/add_new_ice_contact_xml">
 
 
 

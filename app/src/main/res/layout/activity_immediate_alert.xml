@@ -4,7 +4,8 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context="com.example.cluex.Activities.ImmediateAlert">
+    tools:context="com.example.cluex.Activities.ImmediateAlert"
+    android:id="@+id/immediate_alert_activity_xml">
 
 
     <!-- Login progress -->
